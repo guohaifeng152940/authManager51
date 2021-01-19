@@ -13,4 +13,7 @@ package com.imti.controller;
  */
 public class StudentInfoController {
 
+	public static void main(String[] args) {
+		
+	}
 }
