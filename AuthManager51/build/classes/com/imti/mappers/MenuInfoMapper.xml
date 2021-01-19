@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imti.dao.MenuInfoDao">
+
+	<!-- 根据父id查询子节点 -->
+	<select id="findMenuInfoByParentId" parameterType="Map" resultType="MenuInfo">
+		select
+			menu_id,
+			parentId,
+			menu_name,
+			menu_state,
+			menu_url,
+			menu_icon,
+			state,
+			menu_delflag,
+			opt_id,
+			createTime,
+			menu_remark
+		from
+			t_menuInfo
+		where
+			menu_delflag=0
+		and
+			parentId=#{parentId}
+		and
+			menu_id in
+			<foreach collection="meunIds" item="meunId" open="(" close=")" separator=",">
+				#{meunId}
+			</foreach>
+	</select>
+	
+	<select id="getCurrentUserOwerMenus" parameterType="int" resultType="String">
+		SELECT
+			rm.menu_id
+		FROM
+			t_user_role ur,
+			t_role_menu rm
+		WHERE
+			ur.role_id=rm.role_id
+		AND
+			ur.user_id=#{user_id}
+	</select>
+	
+	<select id="findAllMeunInfoByRoleId" parameterType="Map" resultType="MenuInfo">
+		select
+			menu_id,
+			parentId,
+			menu_name,
+			menu_state,
+			menu_url,
+			menu_icon,
+			state,
+			menu_delflag,
+			opt_id,
+			createTime,
+			menu_remark
+		from
+			t_menuInfo
+		where
+			menu_delflag=0
+		and
+			parentId=#{parentId}
+	</select>
+	
+	<select id="findRoleOwnerMenuByRoleId" parameterType="int" resultType="Integer">
+		select
+			menu_id
+		from
+			t_role_menu
+		where
+			role_id=#{role_id}
+	</select>
+	
+	<select id="findAllMenuInfo" parameterType="int" resultType="MenuInfo">
+		select
+			menu_id,
+			parentId,
+			menu_name,
+			menu_state,
+			menu_url,
+			menu_icon,
+			state,
+			menu_delflag,
+			opt_id,
+			createTime,
+			menu_remark
+		from
+			t_menuInfo
+		where
+			menu_delflag=0
+		and
+			parentId=#{parentId}
+	</select>
+	
+	<delete id="deleteRoleOldMeunByRoleId" parameterType="int">
+		delete from t_role_menu where role_id=#{role_id}
+	</delete>
+	
+	<insert id="addRoleAndMenu" parameterType="Map">
+		insert into 
+			t_role_menu(
+				role_id,
+				menu_id
+			) values(
+				#{role_id},
+				#{menu_id}
+			)
+	</insert>
+	
+	<insert id="addMenuInfo" parameterType="MenuInfo">
+		insert into
+			t_menuInfo(
+				parentId,
+				menu_name,
+				menu_state,
+				menu_url,
+				menu_icon,
+				opt_id,
+				menu_remark
+			) values(
+				#{parentId},
+				#{menu_name},
+				#{menu_state},
+				#{menu_url},
+				#{menu_icon},
+				#{opt_id},
+				#{menu_remark}
+			)
+	</insert>
+
+</mapper> 
