@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link href="../../css/base.css" rel="stylesheet">
+		<link href="../../css/platform.css" rel="stylesheet">
+		<link rel="stylesheet" href="../../custom/uimaker/easyui.css">
+		<link rel="stylesheet" href="../../custom/uimaker/icon.css">
+		<script type="text/javascript" src="../../custom/jquery.min.js"></script>
+	    <script type="text/javascript" src="../../custom/jquery.easyui.min.js"></script>
+	    <script type="text/javascript" src="../../js/main.js"></script>
+	    <script type="text/javascript" src="../../custom/easyui-lang-zh_CN.js"></script>
+	</head>
+	<body>
+	
+		<!-- 角色列表DataGrid START -->
+    	<table id="dgRoleInfo" data-options="fitColumns:true,fit:true,rownumbers:true,toolbar:'#tbRoleList',url:'../../roleInfo/findAllRoleInfo.action',pagination:true" class="easyui-datagrid">
+	     	<thead>
+	     		<tr>
+					<th data-options="field:'cb',checkbox:true" align="center"></th>
+					<th data-options="field:'role_code',width:50" align="center">角色编号</th>
+					<th data-options="field:'role_name',width:100" align="center">角色名称</th>
+					<th data-options="field:'createTime',width:100" align="center">创建时间</th>
+					<th data-options="field:'role_remark',width:100" align="center">备注</th>
+				</tr>
+	  		 </thead>
+	  	</table>
+		<!-- 角色列表DataGrid END -->
+		
+	  	
+	  	<!-- 角色datagrid button START -->
+	  	<div id="tbRoleList">
+			<div class="opt-buttons" style="width:100%;">
+				<a href="javascript:openRoleInfoAddDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a>
+				<a href="javascript:openRoleInfoModifyDialog()" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a>
+				<a href="javascript:deleteRoleInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true">删除</a>
+				<a href="javascript:roleInfoMenu()" class="easyui-linkbutton" data-options="iconCls:'icon-roleManage',plain:true">分配权限</a>
+	      		<div class="conditions" style="float:right;margin-right: 20px">
+		     		<span class="con-span">角色名: </span>
+		     		<input type="text" name="s_roleName" id="s_roleName" size="20" onkeydown="if(event.keyCode==13) searchRoleInfo()"/>
+					<a href="javascript:searchRoleInfo()" class="easyui-linkbutton" data-options="iconCls:'icon-search',plain:true">搜索</a>
+				</div>
+	      	</div>
+		</div>
+		<!-- 角色datagrid button END -->
+		
+		<!-- 点击角色授权展示角色信息dialog START -->
+		<div id="dlgMenuInfo" class="easyui-dialog" style="width: 300px;height: 350px;padding: 10px 20px" data-options="closed:true,buttons:'#dlgr-buttons',modal:true">
+	     	<ul id="tree"></ul>
+		</div>
+		<!-- 点击角色授权展示角色信息dialog END -->
+		
+		<!-- 点击角色授权展示角色信息dialog的按钮 START -->
+		<div id="dlgr-buttons">
+	      	<a href="javascript:saveRoleAndMenu()" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">授权</a>
+	      	<a href="javascript:closeRoleAndMenu()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">关闭</a>
+		</div>
+		<!-- 点击角色授权展示角色信息dialog的按钮 END -->
+		
+		<script type="text/javascript" src="../../js/roleInfo/roleInfo.js"></script>
+	</body>
+</html>

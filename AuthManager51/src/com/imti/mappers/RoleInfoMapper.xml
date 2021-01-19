@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.imti.dao.RoleInfoDao">
+
+	<select id="findAllRoleInfoForUser" resultType="RoleInfo">
+		select
+			role_id,
+			role_name,
+			role_code,
+			role_state,
+			role_delflag,
+			opt_id,
+			createTime,
+			role_remark
+		from
+			t_roleInfo
+		where
+			role_delflag=0
+			order by createTime desc
+	</select>
+	
+	<select id="findUserOwerRolesByUId" parameterType="int" resultType="Integer">
+		select
+		 	role_id
+		from
+			t_user_role
+		where
+			user_id=#{user_id}
+	</select>
+	
+	<select id="findAllRoleInfo" parameterType="Map" resultType="RoleInfo">
+		select
+			role_id,
+			role_name,
+			role_code,
+			role_state,
+			role_delflag,
+			opt_id,
+			createTime,
+			role_remark
+		from
+			t_roleInfo
+		where
+			role_delflag=0
+			<if test="s_roleName!=null">
+				and role_name like concat('%',#{s_roleName},'%')
+			</if>
+			order by createTime desc
+			limit #{pageBean.start},#{pageBean.rows}
+	</select>
+	
+	<select id="findAllRoleInfoCount" parameterType="Map" resultType="int">
+		select
+			count(*)
+		from
+			t_roleInfo
+		where
+			role_delflag=0
+			<if test="s_roleName!=null">
+				and role_name like concat('%',#{s_roleName},'%')
+			</if>
+	</select>
+	
+</mapper> 
+
+
+
+
+
+
+
+
+
+
+
